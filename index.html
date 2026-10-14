@@ -45,6 +45,12 @@ main{flex:1;padding:1.6vh 3vw;display:grid;grid-template-columns:38fr 62fr;gap:1
 
 footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a2e34;color:#8f98a3;font-size:.78vw}
 .status{display:flex;gap:.6vw;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#69d38a}
+
+/* Boi: reduzir somente o widget para acomodar o preço completo */
+.card-boi .quoteBox{overflow:hidden}
+.card-boi .quoteScale{width:116%;max-width:none;min-width:0;flex:0 0 116%;transform:scale(.86);transform-origin:left center;overflow:visible}
+.card-boi .tradingview-widget-container{max-width:none}
+.card-boi .quoteBox iframe{max-width:none}
 </style>
 </head>
 <body>
@@ -82,7 +88,7 @@ footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-conten
   <!-- Cotações -->
   <div class="quotes">
 
-    <section class="card">
+    <section class="card card-boi">
       <div class="name">BOI GORDO</div>
       <div class="code">BGI1! · B3 &nbsp;·&nbsp; R$/@</div>
       <div class="quoteBox"><div class="quoteScale">
@@ -166,7 +172,7 @@ clock();
 setInterval(clock,1000);
 
 /* ===== Quadro de gráficos rotativo ===== */
-var ROTATE_MS = 20000; /* tempo de cada gráfico (20 segundos) */
+var ROTATE_MS = 35000; /* tempo de cada gráfico (35 segundos) */
 
 var charts = [
   {name:"BOI GORDO",     sub:"BGI1! · B3",           sym:"BMFBOVESPA:BGI1!"},
@@ -205,7 +211,7 @@ function loadChart(i){
   s.text = JSON.stringify({
     autosize: true,
     symbol: item.sym,
-    interval: "15",
+    interval: "D",
     timezone: "America/Sao_Paulo",
     theme: "dark",
     style: "1",
