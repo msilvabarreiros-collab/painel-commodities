@@ -5,27 +5,41 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mercado Futuro | Commodities</title>
 <style>
+:root{--qscale:1.35}
 *{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;background:#0b0d10;color:#f3f5f7;font-family:Arial,Helvetica,sans-serif;overflow:hidden}
 body{display:flex;flex-direction:column}
 header{height:11vh;display:flex;align-items:center;justify-content:space-between;padding:0 3vw;border-bottom:1px solid #2a2e34}
-.brand{font-size:2.1vw;font-weight:700;letter-spacing:.04em}.sub{font-size:.95vw;color:#9da5ae;margin-top:.4vh}
+.sub{font-size:.95vw;color:#9da5ae;margin-top:.4vh}
 .headerLogo{height:6.5vh;border-radius:6px;display:block}
 .clock{text-align:right;font-size:1.4vw;font-weight:700}.date{font-size:.85vw;color:#9da5ae;margin-top:.3vh}
 
 .tickerBar{border-bottom:1px solid #2a2e34;background:#0d0f13;padding:.6vh 0}
 
-main{flex:1;padding:1.6vh 3vw;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:1.3vw;min-height:0}
+main{flex:1;padding:1.6vh 3vw;display:grid;grid-template-columns:38fr 62fr;gap:1.3vw;min-height:0}
+
+/* cotações (esquerda) */
+.quotes{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1.3vw;min-height:0}
 .card{border:1px solid #30353c;border-radius:16px;padding:1.2vw 1.3vw;display:flex;flex-direction:column;background:#111419;min-width:0;min-height:0;overflow:hidden}
 .name{font-size:1.35vw;font-weight:700}.code{font-size:.78vw;color:#8f98a3;margin-top:.2vh}
-.unit{font-size:.78vw;color:#8f98a3;margin-top:.1vh}
+.quoteBox{flex:1;display:flex;align-items:center;overflow:hidden;min-height:0}
+.quoteScale{width:calc(100% / var(--qscale));transform:scale(var(--qscale));transform-origin:left center}
+.tradingview-widget-container{width:100%}
 
-.quoteWrap{flex:0 0 38%;margin-top:.8vh;border-bottom:1px solid #23272d;padding-bottom:.6vh;display:flex;align-items:center}
-.chartWrap{flex:1;margin-top:.8vh;min-height:0;border-radius:8px;overflow:hidden}
-.tradingview-widget-container{height:100%;width:100%}
+/* gráficos (direita) */
+.chartPanel{border:1px solid #30353c;border-radius:16px;background:#111419;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.chartHead{display:flex;align-items:center;justify-content:space-between;padding:1.2vh 1.4vw;border-bottom:1px solid #23272d}
+.chartTitle{font-size:1.5vw;font-weight:700}
+.chartSub{font-size:.8vw;color:#8f98a3;margin-top:.3vh}
+.dots{display:flex;gap:.6vw}
+.dotc{width:.75vw;height:.75vw;border-radius:50%;background:#3a4047}
+.dotc.on{background:#69d38a}
+.chartHost{flex:1;min-height:0;position:relative}
+.chartHost .tradingview-widget-container,.chartHost .tradingview-widget-container__widget{height:100%;width:100%}
+.progress{height:3px;background:#1b1f25}
+.progress i{display:block;height:100%;width:0;background:#69d38a}
 
 footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a2e34;color:#8f98a3;font-size:.78vw}
 .status{display:flex;gap:.6vw;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#69d38a}
-.sponsorLogo{height:3.4vh;border-radius:4px;display:block}
 </style>
 </head>
 <body>
@@ -59,155 +73,166 @@ footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-conten
   </div>
 </div>
 
-<main id="cards">
+<main>
+  <!-- Cotações -->
+  <div class="quotes">
 
-  <!-- Boi Gordo -->
-  <section class="card">
-    <div class="name">BOI GORDO</div>
-    <div class="code">BGI1! · B3 &nbsp;·&nbsp; R$/@</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "BMFBOVESPA:BGI1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
+    <section class="card">
+      <div class="name">BOI GORDO</div>
+      <div class="code">BGI1! · B3 &nbsp;·&nbsp; R$/@</div>
+      <div class="quoteBox"><div class="quoteScale">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+          { "symbol": "BMFBOVESPA:BGI1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
+          </script>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="card">
+      <div class="name">MILHO</div>
+      <div class="code">CCM1! · B3 &nbsp;·&nbsp; R$/saca</div>
+      <div class="quoteBox"><div class="quoteScale">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+          { "symbol": "BMFBOVESPA:CCM1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
+          </script>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="card">
+      <div class="name">IBOVESPA</div>
+      <div class="code">IBOV · B3 &nbsp;·&nbsp; pontos</div>
+      <div class="quoteBox"><div class="quoteScale">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+          { "symbol": "BMFBOVESPA:IBOV", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
+          </script>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="card">
+      <div class="name">DÓLAR</div>
+      <div class="code">DOL1! · B3 &nbsp;·&nbsp; R$/US$</div>
+      <div class="quoteBox"><div class="quoteScale">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
+          { "symbol": "BMFBOVESPA:DOL1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
+          </script>
+        </div>
+      </div></div>
+    </section>
+
+  </div>
+
+  <!-- Gráficos rotativos -->
+  <section class="chartPanel">
+    <div class="chartHead">
+      <div>
+        <div class="chartTitle" id="chartTitle">—</div>
+        <div class="chartSub" id="chartSub"></div>
       </div>
+      <div class="dots" id="dots"></div>
     </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "BMFBOVESPA:BGI1!", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
+    <div class="chartHost" id="chartHost"></div>
+    <div class="progress"><i id="bar"></i></div>
   </section>
-
-  <!-- Soja -->
-  <section class="card">
-    <div class="name">SOJA</div>
-    <div class="code">SOY1! · B3 &nbsp;·&nbsp; US$/bushel</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "BMFBOVESPA:SOY1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
-      </div>
-    </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "BMFBOVESPA:SOY1!", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
-  </section>
-
-  <!-- Milho -->
-  <section class="card">
-    <div class="name">MILHO</div>
-    <div class="code">CCM1! · B3 &nbsp;·&nbsp; R$/saca</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "BMFBOVESPA:CCM1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
-      </div>
-    </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "BMFBOVESPA:CCM1!", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
-  </section>
-
-  <!-- Café Arábica -->
-  <section class="card">
-    <div class="name">CAFÉ ARÁBICA</div>
-    <div class="code">COFFEE (CFD) &nbsp;·&nbsp; US¢/lb</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "PEPPERSTONE:COFFEE", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
-      </div>
-    </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "PEPPERSTONE:COFFEE", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ibovespa -->
-  <section class="card">
-    <div class="name">IBOVESPA</div>
-    <div class="code">IBOV · B3 &nbsp;·&nbsp; pontos</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "BMFBOVESPA:IBOV", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
-      </div>
-    </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "BMFBOVESPA:IBOV", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dólar -->
-  <section class="card">
-    <div class="name">DÓLAR</div>
-    <div class="code">DOL1! · B3 &nbsp;·&nbsp; R$/US$</div>
-    <div class="quoteWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-        { "symbol": "BMFBOVESPA:DOL1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-        </script>
-      </div>
-    </div>
-    <div class="chartWrap">
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-        { "symbol": "BMFBOVESPA:DOL1!", "width": "100%", "height": "100%", "locale": "br", "dateRange": "1D", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-        </script>
-      </div>
-    </div>
-  </section>
-
 </main>
 
 <footer>
-  <div class="status"><span class="dot"></span><span id="status">Cotações ao vivo via TradingView</span></div>
+  <div class="status"><span class="dot"></span><span id="status">Cotações e gráficos via TradingView</span></div>
   <div>Painel MERCADO FUTURO</div>
 </footer>
 
 <script>
+/* ===== Relógio ===== */
 function clock(){
-  const n=new Date();
+  var n=new Date();
   document.getElementById("time").textContent=n.toLocaleTimeString("pt-BR");
   document.getElementById("date").textContent=n.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
 }
 clock();
 setInterval(clock,1000);
+
+/* ===== Quadro de gráficos rotativo ===== */
+var ROTATE_MS = 20000; /* tempo de cada gráfico (20 segundos) */
+
+var charts = [
+  {name:"BOI GORDO",     sub:"BGI1! · B3",           sym:"BMFBOVESPA:BGI1!"},
+  {name:"MILHO",         sub:"CCM1! · B3",           sym:"BMFBOVESPA:CCM1!"},
+  {name:"IBOVESPA",      sub:"IBOV · B3",            sym:"BMFBOVESPA:IBOV"},
+  {name:"DÓLAR",         sub:"DOL1! · B3",           sym:"BMFBOVESPA:DOL1!"},
+  {name:"CAFÉ ARÁBICA",  sub:"COFFEE (CFD)",         sym:"PEPPERSTONE:COFFEE"},
+  {name:"SOJA",          sub:"SOY1! · B3",           sym:"BMFBOVESPA:SOY1!"}
+];
+
+var current = -1;
+var dotsEl = document.getElementById("dots");
+for (var k=0;k<charts.length;k++){
+  var d=document.createElement("span"); d.className="dotc"; dotsEl.appendChild(d);
+}
+
+function loadChart(i){
+  var item = charts[i];
+  document.getElementById("chartTitle").textContent = item.name;
+  document.getElementById("chartSub").textContent = item.sub;
+
+  var dots = dotsEl.children;
+  for (var j=0;j<dots.length;j++){ dots[j].className = "dotc" + (j===i ? " on" : ""); }
+
+  var host = document.getElementById("chartHost");
+  host.innerHTML = "";
+  var wrap = document.createElement("div");
+  wrap.className = "tradingview-widget-container";
+  var inner = document.createElement("div");
+  inner.className = "tradingview-widget-container__widget";
+  wrap.appendChild(inner);
+  var s = document.createElement("script");
+  s.type = "text/javascript";
+  s.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+  s.async = true;
+  s.text = JSON.stringify({
+    autosize: true,
+    symbol: item.sym,
+    interval: "15",
+    timezone: "America/Sao_Paulo",
+    theme: "dark",
+    style: "1",
+    locale: "br",
+    backgroundColor: "rgba(17, 20, 25, 1)",
+    gridColor: "rgba(42, 46, 52, 0.6)",
+    hide_top_toolbar: true,
+    hide_side_toolbar: true,
+    hide_legend: false,
+    hide_volume: false,
+    allow_symbol_change: false,
+    save_image: false,
+    calendar: false
+  });
+  wrap.appendChild(s);
+  host.appendChild(wrap);
+
+  /* barra de progresso */
+  var bar = document.getElementById("bar");
+  bar.style.transition = "none";
+  bar.style.width = "0";
+  void bar.offsetWidth;
+  bar.style.transition = "width " + ROTATE_MS + "ms linear";
+  bar.style.width = "100%";
+}
+
+function next(){
+  current = (current + 1) % charts.length;
+  loadChart(current);
+}
+next();
+setInterval(next, ROTATE_MS);
 </script>
 </body>
 </html>
