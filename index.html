@@ -46,11 +46,12 @@ main{flex:1;padding:1.6vh 3vw;display:grid;grid-template-columns:38fr 62fr;gap:1
 footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a2e34;color:#8f98a3;font-size:.78vw}
 .status{display:flex;gap:.6vw;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#69d38a}
 
-/* Boi: reduzir somente o widget para acomodar o preço completo */
-.card-boi .quoteBox{overflow:hidden}
-.card-boi .quoteScale{width:116%;max-width:none;min-width:0;flex:0 0 116%;transform:scale(.86);transform-origin:left center;overflow:visible}
-.card-boi .tradingview-widget-container{max-width:none}
-.card-boi .quoteBox iframe{max-width:none}
+/* Escala uniforme: reserva largura interna e reduz todos os preços igualmente */
+.quotes .quoteBox{overflow:hidden}
+.quotes .quoteScale{width:114%;max-width:none;min-width:0;flex:0 0 114%;transform:scale(.875);transform-origin:left center;overflow:visible}
+.quotes .tradingview-widget-container,.quotes .quoteBox iframe{max-width:none}
+.quotes .card{position:relative}
+.quotes .card .quoteBox{width:100%}
 </style>
 </head>
 <body>
@@ -114,31 +115,8 @@ footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-conten
       </div></div>
     </section>
 
-    <section class="card">
-      <div class="name">IBOVESPA</div>
-      <div class="code">IBOV · B3 &nbsp;·&nbsp; pontos</div>
-      <div class="quoteBox"><div class="quoteScale">
-        <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-          { "symbol": "BMFBOVESPA:IBOV", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-          </script>
-        </div>
-      </div></div>
-    </section>
-
-    <section class="card">
-      <div class="name">DÓLAR</div>
-      <div class="code">DOL1! · B3 &nbsp;·&nbsp; R$/US$</div>
-      <div class="quoteBox"><div class="quoteScale">
-        <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js" async>
-          { "symbol": "BMFBOVESPA:DOL1!", "width": "100%", "colorTheme": "dark", "isTransparent": true, "locale": "br" }
-          </script>
-        </div>
-      </div></div>
-    </section>
+    <section class="card" id="quoteSlot3"></section>
+    <section class="card" id="quoteSlot4"></section>
 
   </div>
 
@@ -171,6 +149,40 @@ function clock(){
 clock();
 setInterval(clock,1000);
 
+
+/* Alternância apenas dos dois quadros inferiores: 60 segundos por grupo. */
+var quoteGroups = [
+  [{name:"IBOVESPA",code:"IBOV · B3 · pontos",symbol:"BMFBOVESPA:IBOV"},
+   {name:"DÓLAR",code:"DOL1! · B3 · R$/US$",symbol:"BMFBOVESPA:DOL1!"}],
+  [{name:"CAFÉ ARÁBICA",code:"ICF1! · B3",symbol:"BMFBOVESPA:ICF1!"},
+   {name:"SOJA",code:"SJC1! · B3",symbol:"BMFBOVESPA:SJC1!"}]
+];
+var quoteGroupIndex=0;
+function drawQuote(slotId,item){
+  var slot=document.getElementById(slotId);
+  slot.replaceChildren();
+  var name=document.createElement("div");name.className="name";name.textContent=item.name;
+  var code=document.createElement("div");code.className="code";code.textContent=item.code;
+  var box=document.createElement("div");box.className="quoteBox";
+  var scale=document.createElement("div");scale.className="quoteScale";
+  var widget=document.createElement("div");widget.className="tradingview-widget-container";
+  var inner=document.createElement("div");inner.className="tradingview-widget-container__widget";
+  var script=document.createElement("script");
+  script.type="text/javascript";
+  script.src="https://s3.tradingview.com/external-embedding/embed-widget-single-quote.js";
+  script.async=true;
+  script.text=JSON.stringify({symbol:item.symbol,width:"100%",colorTheme:"dark",isTransparent:true,locale:"br"});
+  widget.append(inner,script);scale.appendChild(widget);box.appendChild(scale);
+  slot.append(name,code,box);
+}
+function rotateQuotes(){
+  var group=quoteGroups[quoteGroupIndex];
+  drawQuote("quoteSlot3",group[0]);drawQuote("quoteSlot4",group[1]);
+  quoteGroupIndex=(quoteGroupIndex+1)%quoteGroups.length;
+}
+rotateQuotes();
+setInterval(rotateQuotes,60000);
+
 /* ===== Quadro de gráficos rotativo ===== */
 var ROTATE_MS = 60000; /* tempo de cada gráfico (60 segundos) */
 
@@ -179,8 +191,8 @@ var charts = [
   {name:"MILHO",         sub:"CCM1! · B3",           sym:"BMFBOVESPA:CCM1!"},
   {name:"IBOVESPA",      sub:"IBOV · B3",            sym:"BMFBOVESPA:IBOV"},
   {name:"DÓLAR",         sub:"DOL1! · B3",           sym:"BMFBOVESPA:DOL1!"},
-  {name:"CAFÉ ARÁBICA",  sub:"COFFEE (CFD)",         sym:"PEPPERSTONE:COFFEE"},
-  {name:"SOJA",          sub:"SOY1! · B3",           sym:"BMFBOVESPA:SOY1!"}
+  {name:"CAFÉ ARÁBICA",  sub:"ICF1! · B3",         sym:"BMFBOVESPA:ICF1!"},
+  {name:"SOJA",          sub:"SJC1! · B3",           sym:"BMFBOVESPA:SJC1!"}
 ];
 
 var current = -1;
