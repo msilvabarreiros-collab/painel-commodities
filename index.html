@@ -46,9 +46,9 @@ main{flex:1;padding:1.6vh 3vw;display:grid;grid-template-columns:38fr 62fr;gap:1
 footer{height:6.5vh;padding:0 3vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a2e34;color:#8f98a3;font-size:.78vw}
 .status{display:flex;gap:.6vw;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#69d38a}
 
-/* Escala uniforme: reserva largura interna e reduz todos os preços igualmente */
+/* Cotações uniformes, com leve deslocamento vertical para centralizar os valores */
 .quotes .quoteBox{overflow:hidden}
-.quotes .quoteScale{width:114%;max-width:none;min-width:0;flex:0 0 114%;transform:scale(.875);transform-origin:left center;overflow:visible}
+.quotes .quoteScale{width:114%;max-width:none;min-width:0;flex:0 0 114%;transform:translateY(9px) scale(.875);transform-origin:left center;overflow:visible}
 .quotes .tradingview-widget-container,.quotes .quoteBox iframe{max-width:none}
 .quotes .card{position:relative}
 .quotes .card .quoteBox{width:100%}
